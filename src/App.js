@@ -1,10 +1,16 @@
-import React, {useState, useCallback, useMemo} from 'react';
+import React, {useState, useCallback, useMemo, useEffect} from 'react';
 import {useWebSocket} from "./services/websockets";
 import './App.css';
 
 function App() {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
+
+  useEffect(() => {
+    return () => {
+      socketClient.close();
+    }
+  }, []);
 
   const addMessage = useCallback((type, value) => {
     const now = new Date();
